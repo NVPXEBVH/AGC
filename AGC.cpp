@@ -9,7 +9,6 @@ int lna_gain = 8;                            // Текущее усиление 
 int vga_gain = 36;                           // Текущее усиление vga /*0-62db шаг 2db*/
 const uint8_t TARGET_PEAK_LOW = 20;          // Желаемый нижний порог пика
 const uint8_t TARGET_PEAK_HIGH = 120;        // Желаемый верхний порог пика
-const uint8_t TARGET_PEAK_NOISE = 7;         // Порог шума
 void AGC(signed char* hackrf_iq,int valid_length,int* lna_gain,int* vga_gain)
 {
     double max = 0,rms=0, sum = 0;
