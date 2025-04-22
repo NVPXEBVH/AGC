@@ -12,6 +12,7 @@ const uint8_t TARGET_PEAK_LOW = 20;          // Желаемый нижний п
 const uint8_t TARGET_PEAK_HIGH = 120;        // Желаемый верхний порог пика
 const float TARGET_RMS_LOW = 10;             // Нижний порог RMS (среднеквадратического значения)
 const float TARGET_RMS_HIGH = 50;            // Верхний порог RMS
+const uint8_t TARGET_PEAK_NOISE = 7;        // Порог шума
 void AGC(signed char* hackrf_iq,int valid_length,int* lna_gain,int* vga_gain)
 {
     double max = 0, rms=0, sum = 0;
@@ -33,8 +34,12 @@ void AGC(signed char* hackrf_iq,int valid_length,int* lna_gain,int* vga_gain)
     }
     max = sum / 26.;
     cout << "max= " << max << endl;
-    // Если уровень сигнала слишком низкий - увеличиваем усиление
-    if (max < TARGET_PEAK_LOW || rms< TARGET_RMS_LOW) {
+    if (max < TARGET_PEAK_NOISE)
+{
+    //Если уровень сигнала близок к уровню шума то ничего не делаем
+}
+// Если уровень сигнала слишком низкий - увеличиваем усиление
+else if (max < TARGET_PEAK_LOW || rms< TARGET_RMS_LOW) {
         // Сначала увеличиваем LNA (меньше шума)
         if (*lna_gain < 40) {
             *lna_gain = min(*lna_gain + 8, 40);
