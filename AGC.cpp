@@ -11,7 +11,7 @@ const uint8_t TARGET_PEAK_LOW = 20;          // Желаемый нижний п
 const uint8_t TARGET_PEAK_HIGH = 120;        // Желаемый верхний порог пика
 void AGC(signed char* hackrf_iq,int valid_length,int* lna_gain,int* vga_gain)
 {
-    double max = 0,rms=0, sum = 0;
+    double max = 0, sum = 0;
     //расчет среднего пикового значения (защита от резких скачков усиления)
     for (int i = 0; i < valid_length; i+=10000)
     {
